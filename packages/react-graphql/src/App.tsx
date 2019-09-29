@@ -1,7 +1,8 @@
-import React from "react"
-import ApolloClient, { gql } from "apollo-boost"
+import React, { FC } from "react"
+import ApolloClient from "apollo-boost"
 import { ApolloProvider } from "@apollo/react-hooks"
 import { makeStyles } from "@material-ui/core"
+import ExchangeRates from "./ExchangeRates"
 
 const useStyles = makeStyles({
     app: {
@@ -18,23 +19,17 @@ const useStyles = makeStyles({
 })
 
 const client = new ApolloClient({
-    uri: "https://48p1r2roz4.sse.codesandbox.io"
+    uri: "http://localhost:4000"
 })
 
-const EXCHANGE_RATES = gql`
-    {
-        rates(currency: "USD") {
-            currency
-            rate
-        }
-    }
-`
-
-const App: React.FC = () => {
+const App: FC = () => {
     const classes = useStyles()
+
     return (
         <ApolloProvider client={client}>
-            <div className={classes.app}></div>
+            <div className={classes.app}>
+                <ExchangeRates />
+            </div>
         </ApolloProvider>
     )
 }

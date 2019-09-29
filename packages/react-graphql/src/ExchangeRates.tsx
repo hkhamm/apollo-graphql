@@ -2,60 +2,46 @@ import React, { FC } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
 
-interface RocketInventory {
-    id: number
-    model: string
-    year: number
-    stock: number
+interface ExchangeRate {
+    currency: string
+    rate: string
+    name: string
 }
 
-interface RocketInventoryData {
-    rocketInventory: RocketInventory[]
+interface ExchangeRateData {
+    rates: ExchangeRate[]
 }
 
-interface RocketInventoryVars {
-    year: number
-}
-
-const GET_ROCKET_INVENTORY = gql`
-    query getRocketInventory($year: Int!) {
-        rocketInventory(year: $year) {
-            id
-            model
-            year
-            stock
+const EXCHANGE_RATES = gql`
+    {
+        rates(currency: "USD") {
+            currency
+            rate
         }
     }
 `
 
-export const RocketInventoryList: FC = () => {
-    const { loading, data } = useQuery<RocketInventoryData, RocketInventoryVars>(GET_ROCKET_INVENTORY, {
-        variables: { year: 2019 }
-    })
+const ExchangeRates: FC = () => {
+    const { loading, error, data } = useQuery<ExchangeRateData>(EXCHANGE_RATES)
+
+    if (loading || !data || !data.rates) {
+        return <p>Loading...</p>
+    }
+    if (error) {
+        return <p>Error :(</p>
+    }
+
     return (
-        <div>
-            <h3>Available Inventory</h3>
-            {loading ? (
-                <p>Loading ...</p>
-            ) : (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th>Stock</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data &&
-                            data.rocketInventory.map(inventory => (
-                                <tr>
-                                    <td>{inventory.model}</td>
-                                    <td>{inventory.stock}</td>
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
-            )}
-        </div>
+        <>
+            {data.rates.map(({ currency, rate }) => (
+                <div key={currency}>
+                    <p>
+                        {currency}: {rate}
+                    </p>
+                </div>
+            ))}
+        </>
     )
 }
+
+export default ExchangeRates

@@ -1,9 +1,8 @@
 {
-  "name": "apollo-server",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-      "start": "tsc -w"
-  }
+    "name": "apollo-server",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "tsc-watch --onSuccess \"node ./build/index.js\" --onFailure \"echo Beep! Compilation Failed\" --compiler typescript/bin/tsc"
+    }
 }
