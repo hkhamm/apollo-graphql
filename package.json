@@ -9,7 +9,7 @@
     ]
   },
   "scripts": {
-    "start": "lerna start --parallel"
+    "start": "lerna run start --parallel"
   },
   "dependencies": {
     "lerna": "^3.16.4"
