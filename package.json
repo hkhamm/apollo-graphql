@@ -1,0 +1,17 @@
+{
+  "name": "apollo-graphql",
+  "version": "1.0.0",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "apollo-server",
+      "react-grpahql"
+    ]
+  },
+  "scripts": {
+    "start": "lerna start --parallel"
+  },
+  "dependencies": {
+    "lerna": "^3.16.4"
+  }
+}
