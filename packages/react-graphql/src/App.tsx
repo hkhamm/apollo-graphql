@@ -2,7 +2,7 @@ import React, { FC } from "react"
 import ApolloClient from "apollo-boost"
 import { ApolloProvider } from "@apollo/react-hooks"
 import { makeStyles } from "@material-ui/core"
-import ExchangeRates from "./ExchangeRates"
+import UserInfo from "./UserInfo"
 
 const useStyles = makeStyles({
     app: {
@@ -19,8 +19,10 @@ const useStyles = makeStyles({
 })
 
 const client = new ApolloClient({
-    uri: "http://localhost:4000"
+    uri: "http://localhost:4000",
+    resolvers: {}
 })
+client.writeData({ data: { firstName: "Keith", lastName: "Hamm" } })
 
 const App: FC = () => {
     const classes = useStyles()
@@ -28,7 +30,7 @@ const App: FC = () => {
     return (
         <ApolloProvider client={client}>
             <div className={classes.app}>
-                <ExchangeRates />
+                <UserInfo />
             </div>
         </ApolloProvider>
     )
